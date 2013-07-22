@@ -1,0 +1,63 @@
+<html>
+
+<head>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.3/leaflet.css" />
+ <!--[if lte IE 8]>
+     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.3/leaflet.ie.css" />
+ <![endif]-->
+ <link rel="stylesheet" href="mapdetails.css" />
+  <script src="http://cdn.leafletjs.com/leaflet-0.6.3/leaflet.js"></script>
+</head>
+
+<body>
+   <div id="map"></div>
+
+   <script>
+
+   //Viewer na gray
+        var map = L.map('map').setView([14.5, 121], 10);
+
+   //Map Tile with API
+
+        L.tileLayer('http://{s}.tile.cloudmade.com/43ec28e71d424b5ea6b1888fac73451d/997/256/{z}/{x}/{y}.png',{maxZoom: 18}).addTo(map);
+
+
+    var marker = L.marker([14.5, 121]).addTo(map);
+
+    var circle = L.circle([14.45, 121], 2000, {
+    color: 'blue',
+    fillColor: '#f03',
+    fillOpacity: 0.6
+    }).addTo(map);
+
+    var polygon = L.polygon([
+    [14.5, 121],
+    [14.6, 121.1],
+    [14.6, 121.2],
+    [14.7, 121.1]]).addTo(map);
+
+    marker.bindPopup("<b>Popup popup popup!").openPopup();
+    circle.bindPopup("Encircleeeee...");
+    polygon.bindPopup("Polgyon galore");
+
+    var popup = L.popup()
+    .setLatLng([14.7, 121])
+    .setContent("I am a standalone popup.")
+    .openOn(map);
+
+    var popup = L.popup();
+
+    function onMapClick(e) {
+    popup
+        .setLatLng(e.latlng)
+        .setContent("You clicked the map at " + e.latlng.toString())
+        .openOn(map);
+                           }
+
+    map.on('click', onMapClick);
+
+   </script>
+</body>
+
+
+</html>
