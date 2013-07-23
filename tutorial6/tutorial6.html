@@ -12,8 +12,37 @@
  <div id="map"></div>
 
 <script>
+var littleton = L.marker([39.61, -105.02]).bindPopup('This is Littleton, CO.'),
+    denver    = L.marker([39.74, -104.99]).bindPopup('This is Denver, CO.'),
+    aurora    = L.marker([39.73, -104.8]).bindPopup('This is Aurora, CO.'),
+    golden    = L.marker([39.77, -105.23]).bindPopup('This is Golden, CO.');
 
+var cities = L.layerGroup([littleton, denver, aurora, golden]);
 
+var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/43ec28e71d424b5ea6b1888fac73451d/{styleId}/256/{z}/{x}/{y}.png',
+    cloudmadeAttribution = 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade';
+
+var minimal   = L.tileLayer(cloudmadeUrl, {styleId: 22677, attribution: cloudmadeAttribution}),
+    midnight  = L.tileLayer(cloudmadeUrl, {styleId: 999,   attribution: cloudmadeAttribution}),
+    motorways = L.tileLayer(cloudmadeUrl, {styleId: 46561, attribution: cloudmadeAttribution});
+
+var map = L.map('map', {
+    center: new L.LatLng(39.73, -104.99),
+    zoom: 10,
+    layers: [midnight, motorways, cities]
+});
+
+var baseMaps = {
+    "Minimal": minimal,
+    "Night View": midnight
+};
+
+var overlayMaps = {
+    "Motorways": motorways,
+    "Cities": cities
+};
+
+L.control.layers(baseMaps, overlayMaps).addTo(map);
 
 </script>
 </body>
