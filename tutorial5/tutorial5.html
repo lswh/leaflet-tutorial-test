@@ -1,0 +1,58 @@
+<html>
+
+<head>
+<link rel="stylesheet" href="mapdetails.css" />
+ <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.3/leaflet.css" />
+ <!--[if lte IE 8]>
+     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.3/leaflet.ie.css" />
+ <![endif]-->
+ <script src="http://cdn.leafletjs.com/leaflet-0.6.3/leaflet.js"></script>
+
+ <script src="us-states.js"></script>
+</head>
+
+<body>
+<div id="map"></div>
+
+
+<script>
+
+
+
+var map = L.map('map').setView([37.8,-96], 4);
+
+
+L.tileLayer('http://{s}.tile.cloudmade.com/43ec28e71d424b5ea6b1888fac73451d/22677/256/{z}/{x}/{y}.png', { styleID: 22677, attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+}).addTo(map);
+
+L.geoJson(statesData).addTo(map);
+
+function getColor(d) {
+    return d > 1000 ? '#800026' :
+           d > 500  ? '#BD0026' :
+           d > 200  ? '#E31A1C' :
+           d > 100  ? '#FC4E2A' :
+           d > 50   ? '#FD8D3C' :
+           d > 20   ? '#FEB24C' :
+           d > 10   ? '#FED976' :
+                      '#FFEDA0';
+}
+
+function style(feature) {
+    return {
+        fillColor: getColor(feature.properties.density),
+        weight: 2,
+        opacity: 1,
+        color: 'white',
+        dashArray: '3',
+        fillOpacity: 0.7
+    };
+}
+
+L.geoJson(statesData, {style: style}).addTo(map);
+
+</script>
+
+</body>
+
+</html>
